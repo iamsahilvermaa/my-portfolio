@@ -1,88 +1,104 @@
 # Sahil Verma – Portfolio (Vite + React)
 
-A dark, animated developer portfolio built with **Vite, React, JavaScript, HTML and CSS**.
-No other libraries: animations use plain CSS and small React hooks.
+A dark, animated developer portfolio built with **Vite, React, JavaScript, HTML and CSS**. No other libraries.
 
 ## 1. Run it
-
-You need [Node.js](https://nodejs.org) 18 or newer.
+Needs [Node.js](https://nodejs.org) 18+.
 
 ```bash
-npm install        # once, installs dependencies
-npm run dev        # starts the site at http://localhost:5173
-npm run build      # makes the production site in the dist/ folder
-npm run preview    # previews the built site locally
+npm install        # once
+npm run dev        # http://localhost:5173
+npm run build      # production site in dist/
+npm run preview    # preview the build
 ```
 
-## 2. Project map
+## 2. How the site is organised
 
-```
-index.html                 page title, Google Font (Kanit)
-public/images/             all pictures (mascot + project images)
-src/data/content.js        ALL text, links and images  <-- edit this most
-src/styles.css             ALL colours, sizes and layout
-src/components/
-  Hero.jsx                 top section: nav, big heading, mascot, button
-  Marquee.jsx              two rows of scrolling tiles
-  About.jsx                "About me" + scroll-reveal paragraph
-  Skills.jsx               white numbered list
-  Projects.jsx             stacking project cards
-  Footer.jsx               contact section
-  FadeIn.jsx / Magnet.jsx / AnimatedText.jsx   reusable effects
-```
+| Page | Address | What it shows |
+|---|---|---|
+| Home | `#/` | The main page: Hero, scrolling tiles, About, Skills, Projects (unchanged look) |
+| About | `#/about` | Separate About page (your personal story only) |
+| Projects | `#/projects` | Separate Projects page with ALL projects |
+| One project | `#/project/<slug>` | Full story of a single project (opens when you click its card) |
 
-## 3. How to change things
+Menu: **Skills** scrolls on Home, **Contact** scrolls to the footer.
 
-### Text, links, contact details  →  `src/data/content.js`
-| To change | Edit |
+### Content is separate per page (editing one does not change another)
+In `src/data/content.js`:
+
+| Block | Controls |
 |---|---|
-| Hero heading, tagline, email, phone, LinkedIn, GitHub, button label | `site` |
-| Nav links (label + `#section-id`) | `nav` |
-| Scrolling tile words | `marqueeItems` (first 11 = row 1, rest = row 2) |
-| About heading and paragraph | `about` |
-| Skills list (add/remove `{ title, text }`) | `skills.items` |
-| Projects | `projects.items` |
+| `homeAbout` | the About section on **Home only** |
+| `homeProjects` | the project cards on **Home only** |
+| `aboutPage` | the **About page only** |
+| `projects` | the **Projects page** and every project's own page |
 
-### Mascot / hero picture
-Replace `public/images/mascot.png` with your new image (keep the same name), or change `site.mascot` in `content.js`.
-Use a **PNG with a transparent background**. To change its size, edit `#orbw` → `width` in `styles.css`.
+So editing `aboutPage` never changes Home's About, and adding a project to `projects` never changes the Home cards.
 
-### Add a project
-Copy one block inside `projects.items` and edit it. Cards are numbered automatically and the stacking effect adapts to the count.
+## 3. Project map
+```
+index.html                 page title + Google Font (Kanit)
+public/images/             all pictures (mascot + project images)
+src/data/content.js        ALL text, links, projects  <-- edit this most
+src/styles.css             ALL colours, sizes and layout
+src/router.js              tiny hash router
+src/App.jsx                chooses which page to show
+src/pages/                 Home, AboutPage, ProjectsPage, ProjectDetail
+src/components/            Navbar, Hero, Marquee, About (home), Skills, Projects (stacking cards),
+                           Footer, Cursor, FadeIn, Magnet, AnimatedText
+```
 
-- **Image project:** put 3 pictures in `public/images/` and list them as `images` in this order:
-  `[left-top (wide), left-bottom (wide), right (large)]`. Set `ratio` to width ÷ height of the first two images (e.g. 1600×540 → `2.96`).
-- **Text project:** use `panels` (3 `{ title, text }` boxes) instead of `images`.
-- `link` / `linkLabel` is the button in the top-right of the card (use `'Live Project'` for a deployed demo). Delete `link` to hide the button.
+## 4. How to change things
 
-### Colours and fonts  →  `src/styles.css`
-- Page background: `#0C0C0C` (search and replace to change everywhere).
-- Heading gradient: the `.g` rule (`linear-gradient(180deg,#646973,#BBCCD7)`).
-- Purple contact button: the `.btn` rule.
-- Skills section colour: `#skills{background:#fff;...}`.
-- Font: change the Google Fonts link in `index.html` and `font-family` in `html,body{...}`.
+### Add a new project (appears on Projects page + gets its own page)
+1. Put 3 images in `public/images/`.
+2. In `content.js`, copy a block inside `projects` and edit it:
+   - `slug`: unique, lowercase, no spaces (e.g. `weather-app`). The page address becomes `#/project/weather-app`.
+   - `category`, `status`, `name`, `summary`: header text.
+   - `description`: list of paragraphs (the story).
+   - `features`: bullet list. `tech`: chips. `links`: buttons (e.g. GitHub, Live demo).
+   - `images`: exactly 3 = `[left-top (wide), left-bottom (wide), right (large)]`. `ratio` = width ÷ height of the image. `caption` shows under each image on the project page.
+3. It shows on the Projects page only. Home has its own list: to show a card on Home too, add an item to `homeProjects.items` (its `link` button can point to GitHub or a live site).
 
-### Sizes and spacing
-- Hero heading size: `.big{font-size:...}`
-- Section heading size: `h2{font-size:clamp(...)}`
-- Card stacking: at the top of `Projects.jsx` set `STACK_TOP` (where the first card pins), `STACK_OFFSET` (how much of each earlier card peeks out; bigger = more visible) and `SHRINK`. The scroll distance between cards is `.stack{gap:45vh}` in `styles.css`.
+### Edit or remove a project
+Edit its block in `projects` (Projects page + its own page). Home cards are separate: edit them in `homeProjects.items`.
+
+### About page
+Edit `aboutPage`: `heading` and `paragraphs` (one string per paragraph, any number).
+
+### Home About section and Home project cards
+Edit `homeAbout` (`heading`, `text`) and `homeProjects.items`.
+
+### Contact details, hero text, mascot
+`site` in `content.js`. Replace `public/images/mascot.png` for a new mascot (transparent PNG).
+
+### Menu
+Edit `nav` in `content.js` (`href` is `#/about`, `#/projects`, `#/skills` or `#/contact`).
+
+### Add a brand-new page
+Create `src/pages/XPage.jsx`, register it in the `pages` object in `App.jsx`, and allow its name in the `route` function.
+
+### Colours, fonts, sizes  →  `src/styles.css`
+- Background `#0C0C0C`; heading gradient `.g`; purple button `.btn`; white Skills section `#skills`.
+- Font: Google Fonts link in `index.html` + `html,body{font-family}`.
+- Hero heading size `.big`; section heading size `h2`.
+- Project page look: `.pd`, `.pd-title`, `.feat`, `.chip`, `.gallery`.
+
+### Card stacking
+Top of `src/components/Projects.jsx`: `STACK_TOP`, `STACK_OFFSET` (bigger = more of earlier cards visible), `SHRINK`. Scroll distance between cards: `.stack{gap:45vh}`.
+
+### Cursor and name reveal
+`src/components/Cursor.jsx`. `REVEAL_RADIUS` = size of the circle where the mascot fades to show the name (`0` = off). Cursor colours: `#cd` (dot) and `#cr` (ring) in `styles.css`. Desktop only.
 
 ### Animations
-- Fade-in delay: `delay={0.35}` props in the components (seconds).
-- Marquee speed: the `0.3` multiplier in `Marquee.jsx` (larger = faster).
-- Scroll text reveal: `AnimatedText.jsx`.
-- Mascot magnet strength: `<Magnet padding={150} strength={3}>` in `Hero.jsx` (lower strength = stronger pull).
+Fade delays: `delay={0.35}` props (seconds). Marquee speed: `0.3` in `Marquee.jsx`. Magnet pull: `<Magnet strength={3}>` in `Hero.jsx`.
 
-### Page title
-Edit `<title>` in `index.html`.
+## 5. Deploy
+`npm run build`, then upload `dist/` to Netlify, Vercel, GitHub Pages or any static host. The site uses `#/` addresses, so it works on static hosts with no extra setup.
 
-## 4. Deploy
-Run `npm run build`, then upload the `dist/` folder to Netlify, Vercel, GitHub Pages or any static host.
-(Vercel/Netlify: connect the GitHub repo, build command `npm run build`, output directory `dist`.)
-
-## 5. Troubleshooting
-- **Image not showing:** check the file is in `public/images/` and the path starts with `/images/`.
-- **Changes not showing:** make sure `npm run dev` is running; hard refresh with Ctrl+Shift+R.
-- **Project cards not stacking:** all cards must be direct children of `.stack` (already done), and no parent may have `overflow:hidden/auto`.
-
-- **"Failed to load PostCSS config ... Cannot find module 'tailwindcss'":** a `postcss.config.js` exists in a parent folder (e.g. `Downloads`). This project already ignores it via `css.postcss` in `vite.config.js`. You can also delete or move that stray file.
+## 6. Troubleshooting
+- **Image not showing:** file must be in `public/images/` and the path must start with `/images/`.
+- **Changes not showing:** keep `npm run dev` running; hard refresh (Ctrl+Shift+R).
+- **"Failed to load PostCSS config ... tailwindcss":** a stray `postcss.config.js` exists in a parent folder. This project ignores it via `css.postcss` in `vite.config.js`; you can also delete that file.
+- **Project page says "not found":** the slug in the address doesn't match any `slug` in `projects`.
+- **Cards not stacking:** all cards must be direct children of `.stack`, and no parent may have `overflow:hidden/auto`.

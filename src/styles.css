@@ -53,3 +53,47 @@ nav a:hover{opacity:.7}
 footer{text-align:center;padding:80px 20px 60px;background:#0C0C0C;display:flex;flex-direction:column;gap:32px;align-items:center}
 footer .links{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;font-weight:300;text-transform:uppercase;letter-spacing:.1em}
 @media(min-width:768px){nav{padding:32px 40px 0}.bar{padding:0 40px 40px}#skills,#projects{border-radius:60px 60px 0 0}}
+
+/* purple cursor + name reveal (see Cursor.jsx) */
+#cd,#cr{position:fixed;left:0;top:0;pointer-events:none;z-index:9999;border-radius:50%;opacity:0;transition:opacity .3s}
+#cd{width:10px;height:10px;margin:-5px 0 0 -5px;background:#B600A8;box-shadow:0 0 14px 3px rgba(182,0,168,.7)}
+#cr{border:2px solid #B600A8;background:rgba(118,33,176,.14);transform:translate(-50%,-50%)}
+@media (hover:hover) and (pointer:fine){*{cursor:none!important}}
+@media (hover:none),(pointer:coarse){#cd,#cr{display:none}}
+
+/* separate pages */
+.page{position:relative;animation:pg .5s ease both}
+@keyframes pg{from{opacity:0}to{opacity:1}}
+.subnav{position:absolute;top:0;left:0;right:0;z-index:20}
+.page-projects #projects{margin-top:0;border-radius:0;padding-top:130px}
+
+/* clickable cards, about page, project pages */
+.clickable{cursor:pointer}
+.btnrow{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;align-items:center}
+.btnrow.left{justify-content:flex-start}
+.view-all{text-align:center;margin-top:64px}
+.pj-intro{text-align:center;margin:-32px auto 56px}
+.pd,.abt{max-width:64rem;margin:0 auto;padding:130px 20px 60px}
+.abt h2{margin-bottom:32px}
+.abt .lead{text-align:center;margin-left:auto;margin-right:auto}
+.lead{font-weight:300;font-size:clamp(1rem,2vw,1.4rem);line-height:1.5;max-width:44rem;opacity:.85;margin-bottom:28px}
+.back{display:inline-block;text-transform:uppercase;letter-spacing:.1em;font-weight:500;margin-bottom:32px;opacity:.8}
+.back:hover{opacity:1}
+.pd .cat{margin-bottom:8px}
+.pd-title{font-weight:900;text-transform:uppercase;line-height:1;letter-spacing:-.02em;font-size:clamp(2.2rem,7vw,6rem);margin:8px 0 20px}
+.pd h3,.abt h3{font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:1rem;margin:48px 0 16px;opacity:.7}
+.pd p,.abt p{font-weight:300;line-height:1.75;font-size:clamp(1rem,1.6vw,1.2rem);margin-bottom:14px;max-width:46rem}
+.abt p.lead,.pd p.lead{opacity:.85;font-size:clamp(1rem,2vw,1.4rem);line-height:1.5}
+.feat{list-style:none;display:grid;gap:12px}
+.feat li{display:flex;gap:14px;align-items:flex-start;font-weight:300;line-height:1.5;font-size:clamp(1rem,1.5vw,1.15rem)}
+.feat li::before{content:"";flex:none;width:10px;height:10px;margin-top:9px;border-radius:50%;background:#B600A8;box-shadow:0 0 10px #B600A8}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{border:1px solid rgba(215,226,234,.3);border-radius:999px;padding:8px 18px;font-weight:500;font-size:.9rem}
+.gallery{display:grid;gap:28px}
+.gallery figure{margin:0}
+.gallery img{display:block;width:100%;height:auto;border-radius:clamp(24px,3vw,40px);border:1px solid rgba(215,226,234,.2)}
+.gallery figcaption{font-weight:300;opacity:.7;margin-top:10px;line-height:1.5}
+.nextp{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:64px}
+.cards3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.abt .pic{font-size:clamp(.95rem,1.5vw,1.1rem)}
+.pic .ln{display:block;opacity:.8}

@@ -1,4 +1,4 @@
-import { about, site } from '../data/content.js';
+import { homeAbout, site } from '../data/content.js';
 import FadeIn from './FadeIn.jsx';
 import AnimatedText from './AnimatedText.jsx';
 
@@ -9,14 +9,15 @@ const orbs = [
   { size: 150, pos: { bottom: '8%', right: '10%' }, bg: 'radial-gradient(circle at 35% 30%,#7621B0,#0C0C0C)' },
 ];
 
+// About section on the HOME page. (The separate About page is pages/AboutPage.jsx.)
 export default function About() {
   return (
     <section id="about">
       {orbs.map((o, i) => (
         <div key={i} className="dec" style={{ width: o.size, height: o.size, background: o.bg, ...o.pos }} />
       ))}
-      <FadeIn as="h2" className="g">{about.heading}</FadeIn>
-      <AnimatedText className="t" text={about.text} />
+      <FadeIn as="h2" className="g">{homeAbout.heading}</FadeIn>
+      <AnimatedText className="t" text={homeAbout.text} />
       <FadeIn as="a" className="btn" href={`mailto:${site.email}`}>{site.contactLabel}</FadeIn>
     </section>
   );
