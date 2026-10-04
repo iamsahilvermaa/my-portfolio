@@ -1,9 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { navigate } from '../router.js';
 
-// Stacking settings (edit these):
-const STACK_TOP = 96;      // px from top where the first card sticks
-const STACK_OFFSET = 64;   // extra px per card, so earlier cards peek out above
+// Where cards stick (--stack-top) and how much of earlier cards peek out (--stack-off)
+// are CSS variables at the end of styles.css (separate values for desktop and phones).
 const SHRINK = 0.03;       // how much each earlier card shrinks
 
 const pad = (i) => String(i + 1).padStart(2, '0');
@@ -26,7 +25,7 @@ export default function Projects({ heading, intro, items, detail = false }) {
         const next = cards.current[i + 1];
         let prog = 0;
         if (next) {
-          const nextTop = STACK_TOP + (i + 1) * STACK_OFFSET;
+          const nextTop = parseFloat(getComputedStyle(next).top) || 96;
           prog = Math.min(1, Math.max(0, (vh - next.getBoundingClientRect().top) / (vh - nextTop)));
         }
         const target = 1 - (total - 1 - i) * SHRINK;
@@ -48,7 +47,7 @@ export default function Projects({ heading, intro, items, detail = false }) {
           <article
             className={`card${detail ? ' clickable' : ''}`} key={p.slug || p.name}
             ref={(el) => (cards.current[i] = el)}
-            style={{ top: `${STACK_TOP + i * STACK_OFFSET}px` }}
+            style={{ top: `calc(var(--stack-top, 96px) + ${i} * var(--stack-off, 64px))` }}
             {...(detail ? { 'data-hover': true, role: 'link', tabIndex: 0, onClick: () => open(p.slug), onKeyDown: (e) => { if (e.key === 'Enter') open(p.slug); } } : {})}
           >
             <div className="top">

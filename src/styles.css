@@ -97,3 +97,59 @@ footer .links{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;font-w
 .cards3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
 .abt .pic{font-size:clamp(.95rem,1.5vw,1.1rem)}
 .pic .ln{display:block;opacity:.8}
+
+/* ---------- responsive / mobile ---------- */
+:root{--stack-top:96px;--stack-off:64px}
+html{-webkit-text-size-adjust:100%}
+img{max-width:100%}
+.big,.pd-title,h2{overflow-wrap:anywhere}
+
+@media (max-width:700px){
+  :root{--stack-top:72px;--stack-off:44px}
+  /* hero */
+  #hero{height:100vh;height:100svh}
+  nav{padding:18px 16px 0;font-size:.78rem;letter-spacing:.03em;gap:8px}
+  .big{margin-top:20px}
+  #orbw{top:50%;bottom:auto;transform:translateY(-50%);width:min(380px,78vw)}
+  .bar{padding:0 16px 28px;gap:12px}
+  .bar p{font-size:.68rem;max-width:150px}
+  .btn{padding:12px 22px;font-size:.75rem;letter-spacing:.06em}
+  .ghost{padding:10px 20px;font-size:.78rem;letter-spacing:.06em}
+  /* marquee */
+  #mq{padding-top:72px}
+  .tile{width:260px;height:170px;font-size:1.5rem;text-align:center;padding:0 10px}
+  /* about (home) */
+  #about{padding:140px 20px 150px;gap:36px;min-height:100vh;min-height:100svh}
+  .dec{width:84px!important;height:84px!important}
+  #about .t{font-size:1rem}
+  /* skills */
+  #skills{padding:72px 16px;border-radius:32px 32px 0 0}
+  #skills h2{margin-bottom:48px}
+  .item{gap:14px;padding:28px 0}
+  .num{font-size:2.6rem;min-width:3.2rem}
+  /* project cards: one column, images full width */
+  #projects{padding:72px 14px 80px;margin-top:-32px;border-radius:32px 32px 0 0}
+  .page-projects #projects{padding-top:110px;margin-top:0;border-radius:0}
+  #projects h2{margin-bottom:40px}
+  .pj-intro{margin:-16px auto 36px}
+  .card{border-radius:30px;padding:14px}
+  .top{gap:10px;margin-bottom:14px}
+  .top .num{font-size:2.6rem}
+  .top h3{font-size:1.05rem}
+  .cols{grid-template-columns:1fr;gap:10px}
+  .cols>div{gap:10px}
+  .cols .im{height:auto!important;flex:none!important;border-radius:22px}
+  .pic{border-radius:22px;padding:14px;font-size:.85rem}
+  /* about page / project pages */
+  .pd,.abt{padding:100px 16px 40px}
+  .pd-title{font-size:clamp(1.8rem,9vw,2.6rem)}
+  .nextp .ghost{width:100%;text-align:center}
+  .gallery img{border-radius:20px}
+  footer{padding:56px 16px 40px}
+  footer .btn{max-width:100%;word-break:break-all;text-align:center}
+}
+@media (max-width:380px){
+  nav{font-size:.7rem;gap:6px}
+  .bar p{max-width:130px}
+  .btn{padding:11px 18px}
+}

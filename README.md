@@ -85,13 +85,16 @@ Create `src/pages/XPage.jsx`, register it in the `pages` object in `App.jsx`, an
 - Project page look: `.pd`, `.pd-title`, `.feat`, `.chip`, `.gallery`.
 
 ### Card stacking
-Top of `src/components/Projects.jsx`: `STACK_TOP`, `STACK_OFFSET` (bigger = more of earlier cards visible), `SHRINK`. Scroll distance between cards: `.stack{gap:45vh}`.
+CSS variables `--stack-top` and `--stack-off` at the end of `src/styles.css` (bigger offset = more of earlier cards visible; the phone values are inside the `@media (max-width:700px)` block). `SHRINK` is at the top of `Projects.jsx`. Scroll distance between cards: `.stack{gap:45vh}`.
 
 ### Cursor and name reveal
 `src/components/Cursor.jsx`. `REVEAL_RADIUS` = size of the circle where the mascot fades to show the name (`0` = off). Cursor colours: `#cd` (dot) and `#cr` (ring) in `styles.css`. Desktop only.
 
 ### Animations
 Fade delays: `delay={0.35}` props (seconds). Marquee speed: `0.3` in `Marquee.jsx`. Magnet pull: `<Magnet strength={3}>` in `Hero.jsx`.
+
+### Mobile layout
+All phone styles are in the `@media (max-width:700px)` block at the end of `src/styles.css` (and a smaller one for very narrow phones). On phones the project cards use one column with full-width images, the hero mascot is centred, and the orbs and tiles are smaller.
 
 ## 5. Deploy
 `npm run build`, then upload `dist/` to Netlify, Vercel, GitHub Pages or any static host. The site uses `#/` addresses, so it works on static hosts with no extra setup.
